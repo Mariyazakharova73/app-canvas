@@ -220,16 +220,29 @@ function randInt(min, max) {
 
 function closestPointBW(b1, w1) {
 	let ballToWallStart = w1.start.subtr(b1.pos);
-	if (Vector.dot(w1.waillUnit(), ballToWallStart)>0) {
+	if (Vector.dot(w1.wallUnit(), ballToWallStart) > 0) {
 		return w1.start;
 	}
 
 	let wallEndToBall = b1.pos.subtr(w1.end);
-	
+	if (Vector.dot(w1.wallUnit(), wallEndToBall) > 0) {
+		return w1.end;
+	}
+
+	let closestDist = Vector.dot(w1.wallUnit(), ballToWallStart);
+	let closestVest = w1.wallUnit().mult(closestDist);
+	return w1.start.subtr(closestVest);
 }
 
 function call_det_bb(b1, b2) {
 	return b1.r + b2.r >= b2.pos.subtr(b1.pos).mag();
+}
+
+function coll_det_bw(b1, w1) {
+	let ballToClosest = closestPointBW(b1, w1).subtr(b1.pos);
+	if (ballToClosest.mag() <= b1.r) {
+		return true;
+	}
 }
 
 function pen_res_bb(b1, b2) {
@@ -242,6 +255,11 @@ function pen_res_bb(b1, b2) {
 	// b2.pos = b2.pos.add(pen_res.mult(-1));
 	b1.pos = b1.pos.add(pen_res.mult(b1.inv_m));
 	b2.pos = b2.pos.add(pen_res.mult(-b2.inv_m));
+}
+
+function pen_res_bw(b1, w1) {
+	let penVect = b1.pos.subtr(closestPointBW(b1, w1));
+	b1.pos = b1.pos.add(penVect.unit().mult(b1.r - penVect.mag()));
 }
 
 function coll_res_bb(b1, b2) {
@@ -265,6 +283,14 @@ function coll_res_bb(b1, b2) {
 // 	ctx.fillText('Momentum:' + round(momentum, 4), 500, 330);
 // }
 
+function coll_res_bw(b1, w1) {
+	let normal = b1.pos.subtr(closestPointBW(b1, w1)).unit();
+	let sepSpeed = Vector.dot(b1.speed, normal);
+	let new_sepSpeed = -sepSpeed * b1.elasticity;
+	let vsep_diff = sepSpeed - new_sepSpeed;
+	b1.speed = b1.speed.add(normal.mult(-vsep_diff));
+}
+
 function repeatOften() {
 	ctx.clearRect(0, 0, canvasPlot.clientWidth, canvasPlot.clientHeight);
 
@@ -273,6 +299,13 @@ function repeatOften() {
 		if (b.player) {
 			keyControl(b);
 		}
+
+		walls.forEach((w) => {
+			if(coll_det_bw(balls[index], w)){
+					pen_res_bw(balls[index], w);
+					coll_res_bw(balls[index], w);
+			}
+	})
 
 		for (let i = index + 1; i < balls.length; i++) {
 			if (call_det_bb(balls[index], balls[i])) {
@@ -292,27 +325,51 @@ function repeatOften() {
 		w.drawWall();
 	});
 
+	// closestPointBW(Ball1, Wall1)
+	// 	.subtr(Ball1.pos)
+	// 	.drawVec(Ball1.pos.x, Ball1.pos.y, 1, 'red');
+
 	requestAnimationFrame(repeatOften);
 }
 
-// for (let i = 0; i < 10; i++) {
-// 	let newBall = new Ball(
-// 		randInt(100, 500),
-// 		randInt(5, 400),
-// 		randInt(20, 50),
-// 		randInt(0, 10)
-// 	);
-// 	newBall.elasticity = randInt(0, 10) / 10;
-// 	newBall.color = '#1668DC';
-// }
+for (let i = 0; i < 10; i++) {
+	let newBall = new Ball(
+		randInt(100, 500),
+		randInt(5, 400),
+		randInt(20, 50),
+		randInt(0, 10)
+	);
+	newBall.elasticity = randInt(0, 10) / 10;
+	newBall.color = '#1668DC';
+}
 
-let Ball1 = new Ball(200, 200, 30, 2, '#2020b0');
+//let Ball1 = new Ball(200, 200, 30, 2, '#2020b0');
 // let Ball2 = new Ball(300, 250, 40, '#8720b0', 5);
 // let Ball3 = new Ball(250, 220, 35, '#ff0184', 3);
 // Ball1.player = true;
-// Ball1.elasticity = 0.01;
+// Ball1.elasticity = 1;
+
+let edge1 = new Wall(0, 0, canvasPlot.clientWidth, 0);
+let edge2 = new Wall(
+	canvasPlot.clientWidth,
+	0,
+	canvasPlot.clientWidth,
+	canvasPlot.clientHeight
+);
+let edge3 = new Wall(
+	canvasPlot.clientWidth,
+	canvasPlot.clientHeight,
+	0,
+	canvasPlot.clientHeight
+);
+let edge4 = new Wall(
+	0,
+	canvasPlot.clientWidth,
+	0,
+	0
+);
 
 let Wall1 = new Wall(200, 200, 400, 300);
 balls[0].player = true;
-// balls[0].color = '#ff4d4f';
+balls[0].color = '#ff4d4f';
 requestAnimationFrame(repeatOften);
