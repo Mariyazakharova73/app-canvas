@@ -1,0 +1,12 @@
+body {
+  margin: 0;
+  display: flex;
+  min-height: 100vh;
+}
+
+#canvas_plot {
+  margin: auto;
+  background-color: #ead9ce;
+  display: block;
+  border: 1px solid black;
+}
