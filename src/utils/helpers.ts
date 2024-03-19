@@ -7,26 +7,28 @@ let UP: boolean | undefined;
 let RIGHT: boolean | undefined;
 let DOWN: boolean | undefined;
 
-export const changeSpeed = (ball: Ball) => {
+export const changeAcceleration = (ball: Ball) => {
   if (LEFT) {
-    ball.speed_x = -ball.speed;
+    ball.acc.x = -ball.acceleration;
   }
   if (UP) {
-    ball.speed_y = -ball.speed;
+    ball.acc.y = -ball.acceleration;
   }
   if (RIGHT) {
-    ball.speed_x = ball.speed;
+    ball.acc.x = ball.acceleration;
   }
   if (DOWN) {
-    ball.speed_y = ball.speed;
+    ball.acc.y = ball.acceleration;
   }
 
   if (!UP && !DOWN) {
-    ball.speed_y = 0;
+    // шар движется с постоянной скоростью
+    ball.acc.y = 0;
   }
 
   if (!LEFT && !RIGHT) {
-    ball.speed_x = 0;
+    // шар движется с постоянной скоростью
+    ball.acc.x = 0;
   }
 };
 

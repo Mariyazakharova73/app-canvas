@@ -1,4 +1,5 @@
 import { ballsArr } from './variables';
+import { Vector } from './vector';
 
 export class Ball {
   x: number;
@@ -6,9 +7,11 @@ export class Ball {
   r: number;
   color: string | CanvasGradient | CanvasPattern;
   player: boolean;
-  speed: number;
-  speed_x: number;
-  speed_y: number;
+
+  speed: Vector;
+  acc: Vector;
+
+  acceleration: number;
 
   constructor(x: number, y: number, r: number, color: string) {
     this.x = x;
@@ -17,9 +20,9 @@ export class Ball {
     this.color = color;
     this.player = false;
 
-    this.speed = 10;
-    this.speed_x = 0;
-    this.speed_y = 0;
+    this.speed = new Vector(0, 0);
+    this.acc = new Vector(0, 0);
+    this.acceleration = 1;
 
     // Добавляем мяч в массив при создании экземпляра
     ballsArr.push(this);
@@ -32,5 +35,11 @@ export class Ball {
     ctx.stroke();
     ctx.fillStyle = this.color;
     ctx.fill();
+  }
+
+  display(ctx: CanvasRenderingContext2D) {
+    this.speed.drawVec(ctx, 550, 300, 10, 'green');
+    this.acc.unit().drawVec(ctx, 550, 300, 50, '#c251f6');
+    this.acc.normal().drawVec(ctx, 550, 300, 50, '#f6519b');
   }
 }

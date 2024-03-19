@@ -1,7 +1,9 @@
 .canvas {
   margin: auto;
-  background-color: #f9f0e4;
+  background-color: #e1e3e6;
   display: block;
-  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  box-shadow: 2px 2px 4px rgba(4, 217, 255, 0.6);
+  /* box-shadow: 2px 2px 4px rgba(188, 19, 254, 0.6); */
+
   width: 700px;
 }
