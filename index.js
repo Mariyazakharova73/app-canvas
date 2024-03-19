@@ -300,12 +300,12 @@ function repeatOften() {
 			keyControl(b);
 		}
 
-		walls.forEach((w) => {
-			if(coll_det_bw(balls[index], w)){
-					pen_res_bw(balls[index], w);
-					coll_res_bw(balls[index], w);
+		walls.forEach(w => {
+			if (coll_det_bw(balls[index], w)) {
+				pen_res_bw(balls[index], w);
+				coll_res_bw(balls[index], w);
 			}
-	})
+		});
 
 		for (let i = index + 1; i < balls.length; i++) {
 			if (call_det_bb(balls[index], balls[i])) {
@@ -362,12 +362,7 @@ let edge3 = new Wall(
 	0,
 	canvasPlot.clientHeight
 );
-let edge4 = new Wall(
-	0,
-	canvasPlot.clientWidth,
-	0,
-	0
-);
+let edge4 = new Wall(0, canvasPlot.clientWidth, 0, 0);
 
 let Wall1 = new Wall(200, 200, 400, 300);
 balls[0].player = true;
