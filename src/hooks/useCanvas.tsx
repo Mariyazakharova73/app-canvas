@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react';
+import { Wall } from '../utils/classes/wall';
 
 type Draw = (ctx: CanvasRenderingContext2D) => void;
 
@@ -26,6 +27,20 @@ const useCanvas = (draw: Draw) => {
     canvas?.focus();
 
     if (canvas) {
+      let edge1 = new Wall(0, 0, canvas.clientWidth, 0);
+      let edge2 = new Wall(
+        canvas.clientWidth,
+        0,
+        canvas.clientWidth,
+        canvas.clientHeight,
+      );
+      let edge3 = new Wall(
+        canvas.clientWidth,
+        canvas.clientHeight,
+        0,
+        canvas.clientHeight,
+      );
+      let edge4 = new Wall(0, canvas.clientWidth, 0, 0);
       resizeCanvas(canvas);
     }
 

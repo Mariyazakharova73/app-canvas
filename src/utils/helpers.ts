@@ -1,11 +1,20 @@
 import { KeyboardEvent } from 'react';
-import { Ball } from './ball';
+import { Ball } from './classes/ball';
 import { ARROW_DOWN, ARROW_LEFT, ARROW_RIGHT, ARROW_UP } from './variables';
 
 let LEFT: boolean | undefined;
 let UP: boolean | undefined;
 let RIGHT: boolean | undefined;
 let DOWN: boolean | undefined;
+
+export function roundNumber(num: number, precision: number) {
+  let factor = 10 ** precision;
+  return Math.round(num * factor) / factor;
+}
+
+export function randInt(min: number, max: number) {
+  return Math.floor(Math.random() * (max - min)) + min;
+}
 
 export const changeAcceleration = (ball: Ball) => {
   if (LEFT) {
