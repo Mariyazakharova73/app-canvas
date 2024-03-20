@@ -1,13 +1,14 @@
-import { KeyboardEvent, useCallback } from 'react';
+import { KeyboardEvent, MouseEvent, useCallback, useState } from 'react';
 import './App.css';
-import Canvas from './components/Canvas';
+import Canvas from './components/Canvas/Canvas';
+import Modal from './components/Modal/Modal';
 import { Ball } from './utils/classes/ball';
-import { changeAcceleration, changeKey, randInt } from './utils/helpers';
 import {
   getCollision,
   handleCollision,
   moveAwayBalls,
 } from './utils/helpers/ballCollision';
+import { changeAcceleration, changeKey, randInt } from './utils/helpers/helpers';
 import {
   denyEntryBW,
   getCollisionBW,
@@ -16,6 +17,8 @@ import {
 import { BALL_COLOR, MAIN_BALL_COLOR, ballsArr, wallsArr } from './utils/variables';
 
 function App() {
+  const [isOpen, setIsOpen] = useState(false);
+
   for (let i = 0; i < 10; i++) {
     const ball = new Ball(
       randInt(100, 500),
@@ -26,9 +29,6 @@ function App() {
     );
   }
 
-  // const ball1 = new Ball(200, 250, 50, 10, BALL_COLOR);
-  // const ball2 = new Ball(300, 200, 20, 10, BALL_COLOR);
-  // const ball3 = new Ball(250, 220, 35, 3, BALL_COLOR);
   ballsArr[0].player = true;
   ballsArr[0].color = MAIN_BALL_COLOR;
 
@@ -42,6 +42,11 @@ function App() {
 
   const handleKeyUp = (e: KeyboardEvent<HTMLCanvasElement>) => {
     changeKey(e, false);
+  };
+
+  const handleCanvasClick = (e: MouseEvent<HTMLCanvasElement>) => {
+    console.log(e.clientX);
+    console.log(e.clientY);
   };
 
   // main field
@@ -80,7 +85,13 @@ function App() {
 
   return (
     <div className="App">
-      <Canvas draw={draw} handleKeyDown={handleKeyDown} handleKeyUp={handleKeyUp} />
+      <Modal isOpen={isOpen}>ggggg</Modal>
+      <Canvas
+        draw={draw}
+        handleKeyDown={handleKeyDown}
+        handleKeyUp={handleKeyUp}
+        handleCanvasClick={handleCanvasClick}
+      />
     </div>
   );
 }

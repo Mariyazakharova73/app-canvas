@@ -1,6 +1,6 @@
 import { KeyboardEvent } from 'react';
-import { Ball } from './classes/ball';
-import { ARROW_DOWN, ARROW_LEFT, ARROW_RIGHT, ARROW_UP } from './variables';
+import { Ball } from '../classes/ball';
+import { ARROW_DOWN, ARROW_LEFT, ARROW_RIGHT, ARROW_UP } from '../variables';
 
 let LEFT: boolean | undefined;
 let UP: boolean | undefined;

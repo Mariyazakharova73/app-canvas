@@ -1,4 +1,4 @@
-import { roundNumber } from '../helpers';
+import { roundNumber } from '../helpers/helpers';
 import { FRICTION, TEXT_COLOR, ballsArr } from '../variables';
 import { Vector } from './vector';
 
