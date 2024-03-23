@@ -2,8 +2,8 @@ import { PropsWithChildren, type ReactNode } from 'react';
 import { createPortal } from 'react-dom';
 
 export interface PortalProps {
-  children: ReactNode; // элемент
-  element?: HTMLElement; // место назначения
+  children: ReactNode;
+  element?: HTMLElement;
 }
 
 const Portal = ({

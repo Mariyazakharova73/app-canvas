@@ -27,7 +27,7 @@ const useCanvas = (draw: Draw) => {
     canvas?.focus();
 
     if (canvas) {
-      let edge1 = new Wall(0, 0, canvas.clientWidth, 0);
+     let edge1 = new Wall(0, 0, canvas.clientWidth, 0);
       let edge2 = new Wall(
         canvas.clientWidth,
         0,
@@ -43,7 +43,7 @@ const useCanvas = (draw: Draw) => {
       let edge4 = new Wall(0, canvas.clientWidth, 0, 0);
       resizeCanvas(canvas);
     }
-
+   
     const context = canvas?.getContext('2d');
     let animationFrameId: number;
 

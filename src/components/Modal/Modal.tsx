@@ -22,8 +22,6 @@ const Modal = (props: PropsWithChildren<ModalProps>) => {
   // for animation when closing a modal
   const [isClosing, setIsClosing] = useState(false);
 
-  const [isMounted, setIsMounted] = useState(false);
-
   const timerRef = useRef<ReturnType<typeof setTimeout>>();
 
   const closeHandler = useCallback(() => {
@@ -50,15 +48,6 @@ const Modal = (props: PropsWithChildren<ModalProps>) => {
   );
 
   useEffect(() => {
-    if (isOpen) {
-      setIsMounted(true);
-    }
-    return () => {
-      setIsMounted(false);
-    };
-  }, [isOpen]);
-
-  useEffect(() => {
     window.addEventListener('keydown', onKeyDown);
     return () => {
       clearTimeout(timerRef.current);
@@ -79,7 +68,6 @@ const Modal = (props: PropsWithChildren<ModalProps>) => {
           onClick={closeHandler}
           role="button"
           tabIndex={0}
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
           // @ts-ignore
           onKeyDown={onKeyDown}
         >
@@ -88,8 +76,6 @@ const Modal = (props: PropsWithChildren<ModalProps>) => {
             role="button"
             tabIndex={0}
             onClick={onContentClick}
-            // eslint-disable-next-line no-console
-            onKeyDown={() => console.log('test')}
           >
             {children}
           </div>

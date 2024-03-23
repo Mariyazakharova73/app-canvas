@@ -1,4 +1,11 @@
-import { KeyboardEvent, MouseEvent, useCallback, useState } from 'react';
+import {
+  ChangeEvent,
+  KeyboardEvent,
+  MouseEvent,
+  useCallback,
+  useEffect,
+  useState,
+} from 'react';
 import './App.css';
 import Canvas from './components/Canvas/Canvas';
 import Modal from './components/Modal/Modal';
@@ -18,19 +25,37 @@ import { BALL_COLOR, MAIN_BALL_COLOR, ballsArr, wallsArr } from './utils/variabl
 
 function App() {
   const [isOpen, setIsOpen] = useState(false);
+  const [color, setColor] = useState(MAIN_BALL_COLOR);
+  const [index, setIndex] = useState<null | number>(null);
 
-  for (let i = 0; i < 10; i++) {
-    const ball = new Ball(
-      randInt(100, 500),
-      randInt(50, 400),
-      randInt(20, 50),
-      randInt(0, 10),
-      BALL_COLOR,
-    );
-  }
+  useEffect(() => {
+    for (let i = 0; i < 10; i++) {
+      const ball = new Ball(
+        randInt(100, 600),
+        randInt(50, 350),
+        randInt(20, 50),
+        randInt(0, 10),
+        BALL_COLOR,
+      );
+    }
+    ballsArr[0].player = true;
+    ballsArr[0].color = MAIN_BALL_COLOR;
+    ballsArr[0].r = 30;
+  }, []);
 
-  ballsArr[0].player = true;
-  ballsArr[0].color = MAIN_BALL_COLOR;
+  useEffect(() => {
+    if (index || index === 0) {
+      ballsArr[index].color = color;
+    }
+  }, [color, index]);
+
+  const openModal = () => {
+    setIsOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsOpen(false);
+  };
 
   const moveBall = useCallback((ball: Ball) => {
     changeAcceleration(ball);
@@ -44,9 +69,27 @@ function App() {
     changeKey(e, false);
   };
 
+  const handleChangeColor = (e: ChangeEvent<HTMLInputElement>) => {
+    setColor(e.target.value);
+  };
+
   const handleCanvasClick = (e: MouseEvent<HTMLCanvasElement>) => {
-    console.log(e.clientX);
-    console.log(e.clientY);
+    const rect = e.currentTarget.getBoundingClientRect();
+    const click_X = e.clientX - rect.x;
+    const click_Y = e.clientY - rect.y;
+
+    ballsArr.forEach((item, index) => {
+      if (
+        click_X < item.pos.x + item.r &&
+        click_X > item.pos.x - item.r &&
+        click_Y < item.pos.y + item.r &&
+        click_Y > item.pos.y - item.r
+      ) {
+        openModal();
+        setColor(item.color as string);
+        setIndex(index);
+      }
+    });
   };
 
   // main field
@@ -85,7 +128,12 @@ function App() {
 
   return (
     <div className="App">
-      <Modal isOpen={isOpen}>ggggg</Modal>
+      <Modal isOpen={isOpen} onClose={closeModal}>
+        <div className="wrapper">
+          <h3>Изменить цвет шара</h3>
+          <input type="color" value={color} onChange={handleChangeColor} />
+        </div>
+      </Modal>
       <Canvas
         draw={draw}
         handleKeyDown={handleKeyDown}
