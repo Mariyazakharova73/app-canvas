@@ -32,6 +32,7 @@ const Modal = (props: PropsWithChildren<ModalProps>) => {
         setIsClosing(false);
       }, ANIMATION_DELAY);
     }
+    
   }, [onClose]);
 
   const onContentClick = (e: MouseEvent<HTMLDivElement>): void => {

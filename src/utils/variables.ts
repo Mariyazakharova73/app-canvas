@@ -14,5 +14,5 @@ export const TEXT_COLOR = 'white';
 export const ballsArr: Ball[] = [];
 export const wallsArr: Wall[] = [];
 
-export const FRICTION = 0.05;
+export const FRICTION = 0.03;
 export const ELASTICITY = 1;
