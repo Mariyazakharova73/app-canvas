@@ -39,6 +39,10 @@
 
 </details>
 
+**Cсылка на проект**
+
+* [Ссылка: "app-canvas"](https://mariyazakharova73.github.io/app-canvas/)
+
 <div align="center">
   <img width="575" alt="Приложение." src="./src/assets/app-canvas.png">
 </div>
