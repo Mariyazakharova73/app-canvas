@@ -43,21 +43,13 @@ export class Ball {
   }
 
   display(ctx: CanvasRenderingContext2D) {
-   // this.speed.drawVec(ctx, this.pos.x, this.pos.y, 10, 'green');
-    // ctx.fillStyle = TEXT_COLOR;
-    // ctx.font = 'bold 8pt Arial';
-    // ctx.fillText('m=' + this.m, this.pos.x - 10, this.pos.y + 5);
-    // ctx.fillText(
-    //   's.x=' + roundNumber(this.speed.x, 2),
-    //   this.pos.x - 10,
-    //   this.pos.y - 5,
-    // );
-    // ctx.fillText(
-    //   's.y=' + roundNumber(this.speed.y, 2),
-    //   this.pos.x - 10,
-    //   this.pos.y - 15,
-    // );
-    // ctx.fillText('acc=' + roundNumber(this.acc.x, 2), this.pos.x - 10, this.pos.y + 15);
+    // this.speed.drawVec(ctx, this.pos.x, this.pos.y, 10, 'green');
+    ctx.fillStyle = TEXT_COLOR;
+    ctx.font = 'bold 8pt Arial';
+    ctx.fillText('m=' + this.m, this.pos.x - 10, this.pos.y + 5);
+    ctx.fillText('s.x=' + roundNumber(this.speed.x, 2), this.pos.x - 10, this.pos.y - 5);
+    ctx.fillText('s.y=' + roundNumber(this.speed.y, 2), this.pos.x - 10, this.pos.y - 15);
+    ctx.fillText('acc=' + roundNumber(this.acc.x, 2), this.pos.x - 10, this.pos.y + 15);
   }
 
   reposition() {
