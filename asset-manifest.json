@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/app-canvas/static/css/main.c5ee1719.css",
-    "main.js": "/app-canvas/static/js/main.4d1061de.js",
+    "main.js": "/app-canvas/static/js/main.830835ea.js",
     "index.html": "/app-canvas/index.html",
     "main.c5ee1719.css.map": "/app-canvas/static/css/main.c5ee1719.css.map",
-    "main.4d1061de.js.map": "/app-canvas/static/js/main.4d1061de.js.map"
+    "main.830835ea.js.map": "/app-canvas/static/js/main.830835ea.js.map"
   },
   "entrypoints": [
     "static/css/main.c5ee1719.css",
-    "static/js/main.4d1061de.js"
+    "static/js/main.830835ea.js"
   ]
 }
